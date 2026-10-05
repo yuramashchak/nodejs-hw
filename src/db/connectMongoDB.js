@@ -5,5 +5,6 @@ export async function connectMongoDB() {
     console.log('You successfully connected to MongoDB!');
   } catch (err) {
     console.dir(err);
+    process.exit(1);
   }
 }
