@@ -25,7 +25,7 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', function () {
-  if (!this.password) {
+  if (!this.username) {
     this.username = this.email;
   }
 });

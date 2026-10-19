@@ -6,14 +6,14 @@ export const getAllNotes = async (req, res) => {
 
   const skip = (page - 1) * perPage;
   const userId = req.user._id;
-  const allNotes = await Note.find({ userId });
+  let query = Note.find().where('userId').equals(userId);
 
   if (tag) {
-    allNotes.where('tag').equals(tag);
+    query = query.where('tag').equals(tag);
   }
 
   if (search) {
-    allNotes.where({
+    query = query.where({
       $or: [
         { title: { $regex: search, $options: 'i' } },
         { content: { $regex: search, $options: 'i' } },
@@ -22,8 +22,8 @@ export const getAllNotes = async (req, res) => {
   }
 
   const [totalNotes, notes] = await Promise.all([
-    allNotes.clone().countDocuments(),
-    allNotes.skip(skip).limit(perPage),
+    query.clone().countDocuments(),
+    query.clone().skip(skip).limit(Number(perPage)),
   ]);
 
   const totalPages = Math.ceil(totalNotes / perPage);
