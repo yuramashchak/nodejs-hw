@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function saveFileToCloudunary(buffer, userId) {
+export async function saveFileToCloudinary(buffer, userId) {
   const options = {
     folder: 'students-app/avatars',
     public_id: `avatar_${userId}`,
